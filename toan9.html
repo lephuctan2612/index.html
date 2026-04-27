@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Game Toán 9</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            margin-top: 50px;
+
+            /* Hình nền toán học */
+            background-image: url("https://cdn.pixabay.com/photo/2017/08/30/07/52/mathematics-2697979_1280.jpg");
+            background-size: cover;
+            color: white;
+        }
+
+        .box {
+            background: rgba(0,0,0,0.6);
+            padding: 20px;
+            border-radius: 15px;
+            display: inline-block;
+        }
+
+        input {
+            padding: 8px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #result {
+            font-size: 24px;
+            margin-top: 10px;
+        }
+
+        #emoji {
+            font-size: 50px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+
+<h1>🎮 Game Toán lớp 9</h1>
+
+<h2 id="question"></h2>
+
+<input type="number" id="answer" placeholder="Nhập đáp án">
+<br><br>
+<button onclick="checkAnswer()">Kiểm tra</button>
+
+<h2 id="result"></h2>
+<div id="emoji"></div>
+
+</div>
+
+<script>
+let correctAnswer;
+
+// Tạo bài toán
+function generateQuestion() {
+    let a = Math.floor(Math.random() * 10) + 1;
+    let b = Math.floor(Math.random() * 10) + 1;
+
+    let type = Math.floor(Math.random() * 3);
+
+    if (type === 0) {
+        document.getElementById("question").innerText = `Tính: ${a}x + ${b} = 0, x = ?`;
+        correctAnswer = -b / a;
+    }
+    else if (type === 1) {
+        document.getElementById("question").innerText = `Tính: x² = ${a*a}, x = ? (lấy nghiệm dương)`;
+        correctAnswer = a;
+    }
+    else {
+        document.getElementById("question").innerText = `Tính: ${a}² + ${b}² = ?`;
+        correctAnswer = a*a + b*b;
+    }
+}
+
+// Kiểm tra đáp án
+function checkAnswer() {
+    let userAnswer = document.getElementById("answer").value;
+
+    if (userAnswer == correctAnswer) {
+        document.getElementById("result").innerText = "✅ ĐÚNG";
+        document.getElementById("emoji").innerText = "😄🎉";
+    } else {
+        document.getElementById("result").innerText = "❌ SAI (Đáp án: " + correctAnswer + ")";
+        document.getElementById("emoji").innerText = "😢";
+    }
+
+    document.getElementById("answer").value = "";
+
+    // Đổi bài sau 2 giây
+    setTimeout(() => {
+        document.getElementById("result").innerText = "";
+        document.getElementById("emoji").innerText = "";
+        generateQuestion();
+    }, 2000);
+}
+
+// Chạy lần đầu
+generateQuestion();
+</script>
+
+</body>
+</html>
